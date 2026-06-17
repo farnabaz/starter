@@ -2,7 +2,7 @@
 const route = useRoute()
 
 const { data: page } = await useAsyncData('page-' + route.path, () => {
-  return queryCollection('content').path(route.path).first()
+  return $fetch(`/api/comark/get${route.path}`)
 })
 
 if (!page.value) {
@@ -11,8 +11,8 @@ if (!page.value) {
 </script>
 
 <template>
-  <ContentRenderer
+  <ComarkRenderer
     v-if="page"
-    :value="page"
+    :tree="page"
   />
 </template>
